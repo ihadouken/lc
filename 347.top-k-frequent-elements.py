@@ -56,8 +56,6 @@ class Solution:
         #     elif pivot > k-1:
         #         quickselect(arr, beg, pivot-1)
         #     # Selected just the right amount, we are done.
-        #     else:
-        #         return
         #
         # quickselect(uniques, 0, len(uniques) - 1)
         # return uniques[:k]
