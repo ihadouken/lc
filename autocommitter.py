@@ -1,15 +1,20 @@
 #!/bin/python
 import subprocess
 
+# Query changes in the repo
 cmd = ['git', 'status', '-s']
 output = subprocess.run(cmd, capture_output=True, text=True)
+# One changed file per line
 changes = output.stdout.splitlines()
 
 for change in changes:
+    # Only interested in new solutions
     if change.startswith('??'):
-        fname = change.split(' ')[-1].removesuffix('\n')
-        id, pname, ext = fname.split('.')
+        # Extract problem info from filename
+        filename = change.split(' ')[-1].removesuffix('\n')
+        id, problem, ext = filename.split('.')
 
+        # Find programming language of solution
         if ext == 'py':
             lang = 'Python'
         elif ext == 'java':
@@ -19,8 +24,9 @@ for change in changes:
         elif ext == 'c':
             lang = 'C'
         else:
-            print(f'Unknown extension {ext} in {fname}. Skipping ...')
+            print(f'Unknown extension {ext} in {filename}. Skipping ...')
             continue
 
-        cmd = f'git add {fname} && git commit -m "Add solution for #{id} in {lang}"'
+        # One commit for each new solution.
+        cmd = f'git add {filename} && git commit -m "Add solution for #{id} in {lang}"'
         subprocess.run(cmd, shell=True)
