@@ -23,6 +23,7 @@ double binExp(double x, long n){
 
     /* Evaluate exponent for reciprocal of x if n < 0. */
     if (n < 0) {
+        /* Built-in abs() fails here as it only works with ints. */
         n = n * -1;
         x = 1/x;
     }
@@ -32,8 +33,8 @@ double binExp(double x, long n){
     while (n) {
         /* If n is odd: Convert problem to divisible i.e. even.
          *              x^n -> x^(n-1) * x^1 -> x * x^(n-1) */
-        /* This case always occurs at the end i.e. n = 0, meaning the exponent
-         * calculated into 'x' by the latter case always ends up into the exp 'variable'. */
+        /* This case always occurs at the last iteration i.e. n = 1, meaning the exponent
+         * calculated into 'x' by the former iterations always ends up into the 'exp' variable. */
         if (n % 2) {
             exp *= x;
             n--;
@@ -50,6 +51,7 @@ double binExp(double x, long n){
 }
 
 double myPow(double x, int n){
-    /* long n is required as absolute of INT_MIN can't be stored in INT_MAX. */
+    /*  long data type is required for n as it may equal INT_MIN.
+     *  But, absolute of INT_MIN = INT_MAX + 1 which can't be stored as int. */
     return binExp(x, (long) n);
 }
