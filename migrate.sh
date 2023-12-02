@@ -65,7 +65,7 @@ while IFS=. read pnum pname pext; do
     esac
 
     sed -i "s/^lang = .*$/lang = '$lang'/" "$newroot/../leetcode.toml" && sleep 10
-    leetcode pick "$pnum" && leetcode exec "$pnum"
+    leetcode exec "$pnum"
 done <<< "$migrations"
 
 # Optionally push the newly submitted solutions on github.
