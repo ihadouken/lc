@@ -51,7 +51,7 @@ realcount="$(printf "$migrations\n" | wc -l)"
 [ $realcount -lt $solcount ] && die "$solcount solutions expected, found $realcount."
 
 # Log solutions to be migrated.
-printf "$migrations\n" | xargs -I {} echo $(date +"[%F %X]") -- {} > migrate.log
+printf "$migrations\n" | xargs -I {} echo $(date +"[%F %X]") -- {} >> migrate.log
 
 # Move solutions from old account to new one.
 printf "$migrations\n" | xargs -I {} mv "$oldroot/{}" "$newroot"
